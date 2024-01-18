@@ -5,7 +5,7 @@ func routes(_ app: Application) throws {
         "It works!"
     }
 
-    app.get("hello") { req async -> String in
-        "Hello, world!"
+    app.group("api") { api in
+        try! api.register(collection: UserController())
     }
 }
