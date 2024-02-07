@@ -5,8 +5,18 @@ import FluentMySQLDriver
 
 // configures your application
 public func configure(_ app: Application) async throws {
-    // uncomment to serve files from /Public folder
-    // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    
+    app.logger.info("Environment: \(app.environment.name)")
+    app.logger.info("Log level: \(app.logger.logLevel)")
+
+    // middlewares
+
+    app.middleware.use(
+        FileMiddleware(
+            publicDirectory: app.directory.publicDirectory,
+            defaultFile: "index.html"
+        )
+    )
     
     // MARK: JWT
     app.jwt.signers.use(.hs256(key: "SecretKeyForJWT"))
@@ -28,4 +38,8 @@ public func configure(_ app: Application) async throws {
     try routes(app)
     try migrations(app)
     try services(app)
+    
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .sortedKeys
+    ContentConfiguration.global.use(encoder: encoder, for: .json)
 }

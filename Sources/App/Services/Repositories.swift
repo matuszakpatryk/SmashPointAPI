@@ -20,6 +20,11 @@ extension Application {
             static var database: Self {
                 .init {
                     $0.repositories.use { DatabaseUserRepository(database: $0.db) }
+                    $0.repositories.use { DatabaseTeamRepository(database: $0.db) }
+                    $0.repositories.use { DatabaseMatchRepository(database: $0.db) }
+                    $0.repositories.use { DatabaseSetRepository(database: $0.db) }
+                    $0.repositories.use { DatabaseGemRepository(database: $0.db) }
+                    $0.repositories.use { DatabasePointRepository(database: $0.db) }
                     $0.repositories.use { DatabaseRefreshTokenRepository(database: $0.db) }
                 }
             }
@@ -29,6 +34,11 @@ extension Application {
         
         final class Storage {
             var makeUserRepository: ((Application) -> UserRepository)?
+            var makeTeamRepository: ((Application) -> TeamRepository)?
+            var makeMatchRepository: ((Application) -> MatchRepository)?
+            var makeSetRepository: ((Application) -> SetRepository)?
+            var makeGemRepository: ((Application) -> GemRepository)?
+            var makePointRepository: ((Application) -> PointRepository)?
             var makeRefreshTokenRepository: ((Application) -> RefreshTokenRepository)?
             init() { }
         }

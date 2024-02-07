@@ -7,13 +7,38 @@
 
 import Vapor
 import Fluent
+import VaporToOpenAPI
 
 struct UserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         routes.group("auth") { auth in
             auth.post("login", use: login)
+                .openAPI(
+                    summary: "Find pet by ID",
+                    description: "Returns a single pet",
+                    response: .type(LoginRequest.self),
+                    responseContentType: .application(.json), .application(.xml)
+                )
+                .response(statusCode: .badRequest, description: "Invalid ID supplied")
+                .response(statusCode: .notFound, description: "Pet not found")
             auth.post("register", use: register)
+                .openAPI(
+                    summary: "Find pet by ID",
+                    description: "Returns a single pet",
+                    response: .type(LoginRequest.self),
+                    responseContentType: .application(.json), .application(.xml)
+                )
+                .response(statusCode: .badRequest, description: "Invalid ID supplied")
+                .response(statusCode: .notFound, description: "Pet not found")
             auth.post("accessToken", use: refreshAccessToken)
+                .openAPI(
+                    summary: "Find pet by ID",
+                    description: "Returns a single pet",
+                    response: .type(LoginRequest.self),
+                    responseContentType: .application(.json), .application(.xml)
+                )
+                .response(statusCode: .badRequest, description: "Invalid ID supplied")
+                .response(statusCode: .notFound, description: "Pet not found")
         }
     }
     

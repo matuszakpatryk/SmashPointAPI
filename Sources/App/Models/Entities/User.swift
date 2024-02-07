@@ -34,4 +34,3 @@ final class User: Model, Content {
         self.password = password
     }
 }
-
